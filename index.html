@@ -6,10 +6,12 @@
 <title>Direction Car — Luxury Car Rental in Casablanca</title>
 <meta name="description" content="Direction Car — premium car rental in Casablanca, Morocco. Dacia, Renault, Hyundai, Volkswagen, Citroën from 199 DH/day. Book in minutes via WhatsApp.">
 <meta name="theme-color" content="#0b0b0d">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230b0b0d'/%3E%3Cpath d='M18 44V20h12a12 12 0 0 1 0 24z' fill='none' stroke='%23d4af6a' stroke-width='4'/%3E%3Cpath d='M38 32h10m-4-4 4 4-4 4' stroke='%23d4af6a' stroke-width='3' fill='none' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="images/icon-180.png">
+<link rel="icon" type="image/png" href="images/icon-180.png">
+<link rel="alternate icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230b0b0d'/%3E%3Cpath d='M18 44V20h12a12 12 0 0 1 0 24z' fill='none' stroke='%23d4af6a' stroke-width='4'/%3E%3Cpath d='M38 32h10m-4-4 4 4-4 4' stroke='%23d4af6a' stroke-width='3' fill='none' stroke-linecap='round'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Manrope:wght@300;400;500;600;700&family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Manrope:wght@300;400;500;600;700&family=Montserrat:wght@500;600;700&family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
 
 <style>
 /* ============================================================
@@ -36,6 +38,7 @@
   --shadow:0 30px 60px -20px rgba(0,0,0,.65);
   --ff-display:"Cormorant Garamond",Georgia,serif;
   --ff-body:"Manrope",system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+  --ff-num:"Montserrat","Manrope",system-ui,sans-serif;
   --maxw:1220px;
 }
 html[lang="ar"]{
@@ -99,13 +102,8 @@ html[dir="rtl"] .btn .arrow{transform:scaleX(-1)}
 .nav.scrolled{background:rgba(11,11,13,.82);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-color:var(--line-soft)}
 .nav-inner{display:flex;align-items:center;justify-content:space-between;height:78px;gap:18px}
 .brand{display:flex;align-items:center;gap:12px}
-.brand-mark{
-  width:42px;height:42px;border-radius:12px;display:grid;place-items:center;
-  border:1px solid var(--line);background:linear-gradient(160deg,#1c1a15,#0d0d0f);
-}
-.brand-mark svg{width:24px;height:24px}
-.brand-name{font-family:"Cormorant Garamond",serif;font-size:1.45rem;font-weight:700;letter-spacing:.14em;color:var(--ivory);line-height:1}
-.brand-name small{display:block;font-family:"Manrope",sans-serif;font-size:.58rem;letter-spacing:.42em;color:var(--gold);font-weight:600;margin-top:4px}
+.brand-logo{height:60px;width:auto}
+.foot-logo{height:64px}
 .nav-links{display:flex;gap:34px;font-size:.9rem;font-weight:500}
 .nav-links a{color:#cfc9bf;position:relative;padding:6px 0;transition:color .2s}
 .nav-links a::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:var(--gold);transform:scaleX(0);transition:transform .3s}
@@ -152,7 +150,7 @@ html[lang="ar"] .hero h1 em{font-style:normal}
 .hero p.lead{font-size:1.12rem;color:#bcb6ab;max-width:470px;margin-bottom:38px}
 .hero-ctas{display:flex;gap:14px;flex-wrap:wrap}
 .hero-stats{display:flex;gap:36px;margin-top:54px;padding-top:28px;border-top:1px solid var(--line-soft);max-width:480px}
-.hero-stats b{display:block;font-family:var(--ff-display);font-size:2rem;color:var(--gold-2);font-weight:600;line-height:1}
+.hero-stats b{display:block;font-family:var(--ff-num);font-size:1.8rem;color:var(--gold-2);font-weight:600;line-height:1;letter-spacing:-.01em}
 .hero-stats span{font-size:.78rem;color:var(--muted);letter-spacing:.08em;text-transform:uppercase}
 html[lang="ar"] .hero-stats span{letter-spacing:0;font-size:.9rem}
 
@@ -168,13 +166,6 @@ html[lang="ar"] .hero-stats span{letter-spacing:0;font-size:.9rem}
 .hero-car img{width:100%}
 @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
 .hero-floor{position:absolute;bottom:14%;width:70%;height:30px;border-radius:50%;background:radial-gradient(closest-side,rgba(0,0,0,.85),transparent);filter:blur(6px)}
-.hero-tag{
-  position:absolute;top:10%;inset-inline-end:2%;padding:14px 18px;border-radius:16px;
-  background:rgba(22,22,26,.75);border:1px solid var(--line);backdrop-filter:blur(10px);
-  font-size:.78rem;color:var(--muted);box-shadow:var(--shadow)
-}
-.hero-tag b{display:block;color:var(--ivory);font-size:1rem;font-weight:600}
-.hero-tag .price{color:var(--gold-2);font-family:var(--ff-display);font-size:1.5rem;font-weight:700}
 .scroll-cue{position:absolute;bottom:26px;left:50%;transform:translateX(-50%);width:24px;height:38px;border:1.5px solid rgba(212,175,106,.5);border-radius:14px}
 .scroll-cue::after{content:"";position:absolute;left:50%;top:8px;width:3px;height:7px;margin-left:-1.5px;border-radius:2px;background:var(--gold);animation:cue 1.8s infinite}
 @keyframes cue{0%{opacity:0;transform:translateY(0)}40%{opacity:1}100%{opacity:0;transform:translateY(12px)}}
@@ -217,12 +208,13 @@ html[lang="ar"] .hero-stats span{letter-spacing:0;font-size:.9rem}
 .car-stage::after{content:"";position:absolute;bottom:28px;left:15%;right:15%;height:18px;border-radius:50%;background:radial-gradient(closest-side,rgba(0,0,0,.75),transparent);filter:blur(4px);z-index:0}
 .car-stage img{position:relative;z-index:1;width:92%;height:180px;object-fit:contain;transition:transform .6s cubic-bezier(.2,.7,.2,1),opacity .35s}
 .car:hover .car-stage img{transform:scale(1.06) translateX(6px)}
+.car-tags{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
 .car-type{
-  position:absolute;top:16px;inset-inline-start:16px;z-index:2;font-size:.7rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;
+  font-size:.7rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;
   padding:7px 12px;border-radius:999px;background:rgba(11,11,13,.7);border:1px solid var(--line);color:var(--gold-2)
 }
 html[lang="ar"] .car-type{letter-spacing:0;font-size:.82rem}
-.car-badge{position:absolute;top:16px;inset-inline-end:16px;z-index:2;font-size:.68rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:7px 11px;border-radius:999px;background:var(--touch);color:#f6dfe2}
+.car-badge{font-size:.68rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:7px 11px;border-radius:999px;background:var(--touch);color:#f6dfe2}
 html[lang="ar"] .car-badge{letter-spacing:0;font-size:.8rem}
 .car-body{padding:22px 24px 24px;display:flex;flex-direction:column;flex:1}
 .car-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
@@ -230,7 +222,7 @@ html[lang="ar"] .car-badge{letter-spacing:0;font-size:.8rem}
 html[lang="ar"] .car-name{font-size:1.45rem}
 .car-brand{font-size:.72rem;letter-spacing:.24em;text-transform:uppercase;color:var(--muted);font-weight:600}
 .car-price{text-align:end;flex:none}
-.car-price b{font-family:"Cormorant Garamond",serif;font-size:2rem;line-height:1;font-weight:700;display:block}
+.car-price b{font-family:var(--ff-num);font-size:1.75rem;line-height:1;font-weight:700;display:block;letter-spacing:-.02em}
 .car-price span{font-size:.72rem;color:var(--muted);letter-spacing:.06em}
 .car-desc{color:#aaa49a;font-size:.9rem;margin:12px 0 16px;min-height:3.2em}
 .specs{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:16px}
@@ -263,7 +255,7 @@ html[lang="ar"] .car-name{font-size:1.45rem}
 .contact-card .ic{width:48px;height:48px;border-radius:50%;background:#1faf5a;display:grid;place-items:center;flex:none}
 .contact-card .ic svg{width:24px;height:24px;fill:#fff}
 .contact-card small{color:var(--muted);font-size:.8rem;display:block}
-.contact-card a{font-size:1.25rem;font-weight:700;color:var(--ivory);direction:ltr;unicode-bidi:embed}
+.contact-card a{font-family:var(--ff-num);font-size:1.2rem;font-weight:600;letter-spacing:.02em;color:var(--ivory);direction:ltr;unicode-bidi:embed}
 
 .form-card{
   border-radius:28px;padding:36px;position:relative;
@@ -291,6 +283,7 @@ select.input{
   background-repeat:no-repeat;background-position:right 16px center;padding-inline-end:40px;cursor:pointer
 }
 html[dir="rtl"] select.input{background-position:left 16px center}
+input[type="tel"].input,input[type="date"].input,.spec,.visit-list .ltr{font-family:var(--ff-num);font-variant-numeric:lining-nums}
 select.input option{background:#16161a;color:var(--ivory)}
 input[type="date"].input{color-scheme:dark}
 .input.err{border-color:#d9534f;box-shadow:0 0 0 4px rgba(217,83,79,.14)}
@@ -306,7 +299,7 @@ input[type="date"].input{color-scheme:dark}
 .summary .n{color:var(--ivory);font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .summary .d{color:var(--muted);font-size:.82rem}
 .summary .t{text-align:end;flex:none}
-.summary .t b{font-family:"Cormorant Garamond",serif;font-size:1.9rem;line-height:1;display:block}
+.summary .t b{font-family:var(--ff-num);font-size:1.6rem;font-weight:700;line-height:1;display:block;letter-spacing:-.02em}
 .summary .t span{font-size:.72rem;color:var(--muted)}
 .form-foot{grid-column:1/-1;display:flex;flex-direction:column;gap:12px;margin-top:6px}
 .form-foot .btn{width:100%;--h:58px;font-size:1rem}
@@ -360,6 +353,23 @@ footer{border-top:1px solid var(--line-soft);padding:36px 0 110px}
 .fab .tip{position:absolute;inset-inline-end:calc(100% + 12px);white-space:nowrap;background:#141416;border:1px solid var(--line);padding:6px 12px;border-radius:10px;font-size:.78rem;opacity:0;pointer-events:none;transform:translateX(6px);transition:.25s;color:var(--ivory)}
 .fab a:hover .tip{opacity:1;transform:none}
 
+.conditions{padding:0 0 110px}
+.cond-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.cond{padding:26px;border-radius:var(--radius);border:1px solid var(--line-soft);background:linear-gradient(180deg,var(--surface-2),var(--surface));transition:border-color .3s,transform .3s}
+.cond:hover{border-color:var(--line);transform:translateY(-3px)}
+.cond-top{display:flex;align-items:center;gap:14px;margin-bottom:12px}
+.cond-ic{width:46px;height:46px;border-radius:14px;flex:none;display:grid;place-items:center;border:1px solid var(--line);background:rgba(212,175,106,.06)}
+.cond-ic svg{width:22px;height:22px;stroke:var(--gold);fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.cond-num{font-family:var(--ff-num);font-weight:700;font-size:1.5rem;line-height:1;color:var(--gold-2)}
+.cond b{display:block;color:var(--ivory);font-size:1.02rem;font-weight:600;margin-bottom:4px}
+.cond p{color:var(--muted);font-size:.9rem}
+.accept{grid-column:1/-1;display:flex;gap:12px;align-items:flex-start;font-size:.88rem;color:#c9c3b9;cursor:pointer}
+.accept input{appearance:none;-webkit-appearance:none;width:22px;height:22px;border-radius:7px;border:1px solid var(--line);background:rgba(11,11,13,.65);flex:none;cursor:pointer;display:grid;place-items:center;margin-top:1px}
+.accept input:checked{background:var(--gold-grad);border-color:transparent}
+.accept input:checked::after{content:"";width:6px;height:11px;border:solid #15110a;border-width:0 2px 2px 0;transform:translateY(-1px) rotate(45deg)}
+.accept a{color:var(--gold-2);text-decoration:underline;text-underline-offset:3px}
+.accept.has-err input{border-color:#d9534f;box-shadow:0 0 0 4px rgba(217,83,79,.14)}
+.accept.has-err span{color:#ef8a86}
 .mbar{display:none}
 /* ============================================================
    RESPONSIVE
@@ -395,6 +405,7 @@ footer{border-top:1px solid var(--line-soft);padding:36px 0 110px}
   .hero .eyebrow::after{display:none}
   .scroll-cue{display:none}
   .reserve-grid{grid-template-columns:1fr}
+  .cond-grid{grid-template-columns:repeat(2,1fr)}
   .visit-card{grid-template-columns:1fr}
 }
 @media (max-width:640px){
@@ -404,18 +415,18 @@ footer{border-top:1px solid var(--line-soft);padding:36px 0 110px}
   .trust-item{border-inline-start:0 !important;border-top:1px solid var(--line-soft);padding:20px 4px}
   .trust-item:first-child{border-top:0}
   .fgrid{grid-template-columns:1fr}
+  .cond-grid{grid-template-columns:1fr}
+  .conditions{padding-bottom:80px}
+  .cond{padding:22px}
   .form-card{padding:24px 18px;border-radius:22px}
   .hero h1{font-size:clamp(2.6rem,12vw,3.4rem)}
   .hero-ctas{flex-direction:column}
   .hero-ctas .btn{width:100%}
   .fleet-grid.all .car:last-child:nth-child(odd){max-width:none}
   .hero-stats{gap:22px}
-  .hero-stats b{font-size:1.6rem}
-  .hero-tag{top:2%;padding:10px 12px}
-  .hero-tag .price{font-size:1.2rem}
-  .brand-name{font-size:1.2rem}
-  .brand-name small{letter-spacing:.3em}
-  .brand-mark{width:38px;height:38px}
+  .hero-stats b{font-size:1.45rem}
+  .brand-logo{height:48px}
+  .foot-logo{height:56px}
   .lang button{min-width:32px;padding:0 7px;height:30px}
   .filters{flex-wrap:nowrap;overflow-x:auto;width:100%;padding-bottom:4px;scrollbar-width:none}
   .filters::-webkit-scrollbar{display:none}
@@ -440,7 +451,6 @@ footer{border-top:1px solid var(--line-soft);padding:36px 0 110px}
   .mbar .m-book{background:var(--gold-grad);color:#15110a;border:0;flex-direction:row;font-size:.9rem;gap:8px}
   .mbar .m-book svg{stroke:#15110a;fill:none;stroke-width:1.8;width:18px;height:18px}
 }
-@media (max-width:380px){ .brand-name small{display:none} }
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none !important;transition:none !important}
   .reveal{opacity:1;transform:none}
@@ -452,17 +462,11 @@ footer{border-top:1px solid var(--line-soft);padding:36px 0 110px}
 <!-- ============================ NAV ============================ -->
 <header class="nav" id="nav">
   <div class="container nav-inner">
-    <a href="#home" class="brand" aria-label="Direction Car">
-      <span class="brand-mark">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#d4af6a" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="12" cy="12" r="10"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/><path d="M15.5 8.5 13 13l-4.5 2.5L11 11z" fill="#d4af6a"/>
-        </svg>
-      </span>
-      <span class="brand-name">DIRECTION<small>CAR · RENTAL</small></span>
-    </a>
+    <a href="#home" class="brand" aria-label="Direction Car"><img class="brand-logo" src="images/logo-600.png" alt="Direction Car"></a>
     <nav class="nav-links">
       <a href="#home" data-i18n="nav.home">Home</a>
       <a href="#fleet" data-i18n="nav.fleet">Fleet</a>
+      <a href="#conditions" data-i18n="nav.cond">Conditions</a>
       <a href="#reservation" data-i18n="nav.reserve">Reservation</a>
       <a href="#visit" data-i18n="nav.contact">Contact</a>
     </nav>
@@ -477,6 +481,7 @@ footer{border-top:1px solid var(--line-soft);padding:36px 0 110px}
   <div class="mobile-menu" id="mobileMenu">
     <a href="#home" data-i18n="nav.home">Home</a>
     <a href="#fleet" data-i18n="nav.fleet">Fleet</a>
+    <a href="#conditions" data-i18n="nav.cond">Conditions</a>
     <a href="#reservation" data-i18n="nav.reserve">Reservation</a>
     <a href="#visit" data-i18n="nav.contact">Contact</a>
     <a href="#reservation" class="btn btn-gold" data-i18n="cta.book">Book now</a>
@@ -512,11 +517,6 @@ footer{border-top:1px solid var(--line-soft);padding:36px 0 110px}
       <div class="hero-ring"></div>
       <div class="hero-floor"></div>
       <div class="hero-car"><img id="heroImg" alt="Hyundai Tucson"></div>
-      <div class="hero-tag">
-        <b>Hyundai Tucson</b>
-        <span class="price">499 <small style="font-size:.8rem" data-i18n="unit.dh">DH</small></span>
-        <span data-i18n="unit.perday">/ day</span>
-      </div>
     </div>
   </div>
   <a href="#trust" class="scroll-cue" aria-label="Scroll"></a>
@@ -530,7 +530,7 @@ footer{border-top:1px solid var(--line-soft);padding:36px 0 110px}
       <div><b data-i18n="t1.b">Fully insured</b><span data-i18n="t1.s">Comprehensive cover on every car</span></div>
     </div>
     <div class="trust-item reveal">
-      <span class="trust-ic"><svg viewBox="0 0 24 24"><path d="M2 16l9-4 9 4"/><path d="M11 12V3l2 1v8"/><path d="M4 20h16"/></svg></span>
+      <span class="trust-ic"><svg viewBox="0 0 24 24"><path d="M12 2.5a1.5 1.5 0 0 1 1.5 1.5v5.5l8 5v2l-8-2.5V19l2 1.5V22L12 21l-3.5 1v-1.5l2-1.5v-5L2.5 16.5v-2l8-5V4A1.5 1.5 0 0 1 12 2.5z"/></svg></span>
       <div><b data-i18n="t2.b">Airport delivery</b><span data-i18n="t2.s">Mohammed V & city hotels</span></div>
     </div>
     <div class="trust-item reveal">
@@ -559,6 +559,43 @@ footer{border-top:1px solid var(--line-soft);padding:36px 0 110px}
   </div>
 </section>
 
+<!-- ============================ CONDITIONS ============================ -->
+<section class="conditions" id="conditions">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow" data-i18n="cond.eyebrow">Rental conditions</span>
+      <h2 class="h-display" data-i18n-html="cond.title">Before you <span class="gold-text">hit the road</span></h2>
+      <p data-i18n="cond.lead">Simple, clear conditions — so your rental is safe and stress-free.</p>
+    </div>
+    <div class="cond-grid">
+      <div class="cond reveal">
+        <div class="cond-top"><span class="cond-ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></span><span class="cond-num">21+</span></div>
+        <b data-i18n="cond.c1.b"></b><p data-i18n="cond.c1.p"></p>
+      </div>
+      <div class="cond reveal">
+        <div class="cond-top"><span class="cond-ic"><svg viewBox="0 0 24 24"><rect x="2.5" y="5" width="19" height="14" rx="2.5"/><circle cx="8.5" cy="11" r="2.2"/><path d="M5.5 16a3 3 0 0 1 6 0M14 10h4.5M14 13.5h3"/></svg></span><span class="cond-num">2+</span></div>
+        <b data-i18n="cond.c2.b"></b><p data-i18n="cond.c2.p"></p>
+      </div>
+      <div class="cond reveal">
+        <div class="cond-top"><span class="cond-ic"><svg viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2"/><circle cx="12" cy="10" r="3"/><path d="M8.5 17h7"/></svg></span></div>
+        <b data-i18n="cond.c3.b"></b><p data-i18n="cond.c3.p"></p>
+      </div>
+      <div class="cond reveal">
+        <div class="cond-top"><span class="cond-ic"><svg viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M12 7.5v9M14.5 10c0-1-1.1-1.6-2.5-1.6s-2.5.6-2.5 1.6 1.1 1.4 2.5 1.8 2.5.8 2.5 1.8-1.1 1.6-2.5 1.6-2.5-.6-2.5-1.6"/></svg></span></div>
+        <b data-i18n="cond.c4.b"></b><p data-i18n="cond.c4.p"></p>
+      </div>
+      <div class="cond reveal">
+        <div class="cond-top"><span class="cond-ic"><svg viewBox="0 0 24 24"><path d="M4 21V5a2 2 0 0 1 2-2h7a2 2 0 0 1 2 2v16M3 21h13M4 10h11"/><path d="M15 8l3 2v7a1.5 1.5 0 0 0 3 0V9l-3-3"/></svg></span></div>
+        <b data-i18n="cond.c5.b"></b><p data-i18n="cond.c5.p"></p>
+      </div>
+      <div class="cond reveal">
+        <div class="cond-top"><span class="cond-ic"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></span><span class="cond-num">24h</span></div>
+        <b data-i18n="cond.c6.b"></b><p data-i18n="cond.c6.p"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ============================ RESERVATION ============================ -->
 <section class="section reserve" id="reservation">
   <div class="container reserve-grid">
@@ -570,7 +607,6 @@ footer{border-top:1px solid var(--line-soft);padding:36px 0 110px}
       </div>
       <div class="perks">
         <div class="perk"><i><svg viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg></i><span data-i18n="res.p1">Free cancellation up to 48h before pick-up</span></div>
-        <div class="perk"><i><svg viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg></i><span data-i18n="res.p2">Unlimited mileage on rentals of 3 days or more</span></div>
         <div class="perk"><i><svg viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg></i><span data-i18n="res.p3">Delivery to the airport, train station or your hotel</span></div>
         <div class="perk"><i><svg viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg></i><span data-i18n="res.p4">We speak Arabic, French & English</span></div>
       </div>
@@ -623,6 +659,7 @@ footer{border-top:1px solid var(--line-soft);padding:36px 0 110px}
           </div>
           <div class="t"><b class="gold-text" id="sumTotal">—</b><span data-i18n="form.total">Estimated total</span></div>
         </div>
+        <label class="accept" id="acceptWrap"><input type="checkbox" id="fAccept"><span data-i18n-html="form.accept">I have read and accept the <a href="#conditions">rental conditions</a>.</span></label>
         <div class="form-foot">
           <button type="submit" class="btn btn-gold">
             <svg viewBox="0 0 24 24" fill="currentColor"><use href="#i-wa"/></svg>
@@ -669,9 +706,7 @@ footer{border-top:1px solid var(--line-soft);padding:36px 0 110px}
 
 <footer>
   <div class="container foot">
-    <a href="#home" class="brand">
-      <span class="brand-name">DIRECTION<small>CAR · RENTAL</small></span>
-    </a>
+    <a href="#home" class="brand" aria-label="Direction Car"><img class="brand-logo foot-logo" src="images/logo-600.png" alt="Direction Car"></a>
     <p>© <span id="year"></span> Direction Car · <span data-i18n="foot.rights">All rights reserved.</span></p>
     <div class="socials">
       <a class="js-wa" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24"><use href="#i-wa"/></svg></a>
@@ -719,7 +754,7 @@ footer{border-top:1px solid var(--line-soft);padding:36px 0 110px}
    ============================================================ */
 const CONFIG = {
   whatsapp: "212661864810",                // 06 61 86 48 10
-  instagram: "https://www.instagram.com/", // TODO: replace with the agency's Instagram page URL
+  instagram: "https://www.instagram.com/direction_car/",
   maps: "https://www.google.com/maps/place/Direction+car/@33.5917572,-7.5077596,17z/data=!3m1!4b1!4m6!3m5!1s0xda62d004db2bda3:0xedb57ca3c958590d!8m2!3d33.5917528!4d-7.5051847!16s%2Fg%2F11zglvt6xn?entry=ttu&g_ep=EgoyMDI2MDkyMy4wIKXMDSoASAFQAw%3D%3D",
   // Car photos: transparent-background studio renders, all at the same angle.
   imageApi: "https://cdn.imagin.studio/getImage",
@@ -832,7 +867,7 @@ const I18N = {
     "car.colour":"Colour","car.reserve":"Reserve",
     "res.eyebrow":"Reservation","res.title":'Reserve in <span class="gold-text">60 seconds</span>',
     "res.lead":"Fill in the form — your request is sent straight to our team on WhatsApp and we confirm availability within minutes.",
-    "res.p1":"Free cancellation up to 48h before pick-up","res.p2":"Unlimited mileage on rentals of 3 days or more",
+    "res.p1":"Free cancellation up to 48h before pick-up",
     "res.p3":"Delivery to the airport, train station or your hotel","res.p4":"We speak Arabic, French & English",
     "res.call":"Prefer to talk? Call or WhatsApp us",
     "form.title":"Your reservation","form.sub":"All fields are required.",
@@ -846,7 +881,8 @@ const I18N = {
     "visit.eyebrow":"Visit us","visit.title":'Our agency in <span class="gold-text">Casablanca</span>',
     "visit.lead":"Drop by to pick up your car, or let us bring it to you. We're always one message away.",
     "visit.hours":"Open 7 days · 08:00 – 22:00","visit.directions":"Get directions",
-    "foot.rights":"All rights reserved.","m.loc":"Location","fab.loc":"Our location","fab.wa":"Chat on WhatsApp",
+    "foot.rights":"All rights reserved.",
+    "nav.cond":"Conditions","cond.eyebrow":"Rental conditions","cond.title":"Before you <span class=\"gold-text\">hit the road</span>","cond.lead":"Simple, clear conditions — so your rental is safe and stress-free.","cond.c1.b":"Minimum age","cond.c1.p":"The driver must be at least 21 years old.","cond.c2.b":"Driving licence","cond.c2.p":"A valid licence held for at least 2 years. Foreign and international licences accepted.","cond.c3.b":"Identity document","cond.c3.p":"National ID card (CIN) for Moroccan residents, valid passport for international clients.","cond.c4.b":"Security deposit","cond.c4.p":"A deposit is required at pick-up and fully returned when the car comes back in the same condition.","cond.c5.b":"Fuel policy","cond.c5.p":"Return the car with the same fuel level as at pick-up.","cond.c6.b":"Rental period","cond.c6.p":"Minimum rental of 1 day (24 hours). Any additional driver must meet the same conditions.","form.accept":"I have read and accept the <a href=\"#conditions\">rental conditions</a>.","m.loc":"Location","fab.loc":"Our location","fab.wa":"Chat on WhatsApp",
     "toast":"Opening WhatsApp to send your reservation…",
     "wa.hello":"Hello Direction Car, I'd like to rent a car.",
     "msg.head":"New reservation — Direction Car","msg.car":"Car","msg.color":"Colour","msg.name":"Name","msg.phone":"Phone",
@@ -872,7 +908,7 @@ const I18N = {
     "car.colour":"Couleur","car.reserve":"Réserver",
     "res.eyebrow":"Réservation","res.title":'Réservez en <span class="gold-text">60 secondes</span>',
     "res.lead":"Remplissez le formulaire — votre demande est envoyée directement à notre équipe sur WhatsApp et nous confirmons la disponibilité en quelques minutes.",
-    "res.p1":"Annulation gratuite jusqu'à 48h avant la prise en charge","res.p2":"Kilométrage illimité à partir de 3 jours",
+    "res.p1":"Annulation gratuite jusqu'à 48h avant la prise en charge",
     "res.p3":"Livraison à l'aéroport, à la gare ou à votre hôtel","res.p4":"Nous parlons arabe, français et anglais",
     "res.call":"Vous préférez parler ? Appelez-nous ou écrivez sur WhatsApp",
     "form.title":"Votre réservation","form.sub":"Tous les champs sont obligatoires.",
@@ -886,7 +922,8 @@ const I18N = {
     "visit.eyebrow":"Nous rendre visite","visit.title":'Notre agence à <span class="gold-text">Casablanca</span>',
     "visit.lead":"Passez récupérer votre voiture, ou laissez-nous vous la livrer. Nous sommes toujours à un message de vous.",
     "visit.hours":"Ouvert 7j/7 · 08:00 – 22:00","visit.directions":"Itinéraire",
-    "foot.rights":"Tous droits réservés.","m.loc":"Adresse","fab.loc":"Notre adresse","fab.wa":"Discuter sur WhatsApp",
+    "foot.rights":"Tous droits réservés.",
+    "nav.cond":"Conditions","cond.eyebrow":"Conditions de location","cond.title":"Avant de <span class=\"gold-text\">prendre la route</span>","cond.lead":"Des conditions simples et claires — pour une location sûre et sans stress.","cond.c1.b":"Âge minimum","cond.c1.p":"Le conducteur doit être âgé d'au moins 21 ans.","cond.c2.b":"Permis de conduire","cond.c2.p":"Permis valide depuis au moins 2 ans. Permis étrangers et internationaux acceptés.","cond.c3.b":"Pièce d'identité","cond.c3.p":"CIN pour les résidents marocains, passeport valide pour les clients internationaux.","cond.c4.b":"Caution","cond.c4.p":"Une caution est demandée à la prise en charge et restituée intégralement au retour du véhicule en bon état.","cond.c5.b":"Carburant","cond.c5.p":"Rendre la voiture avec le même niveau de carburant qu'au départ.","cond.c6.b":"Durée de location","cond.c6.p":"Location minimum d'1 jour (24 heures). Tout conducteur supplémentaire doit remplir les mêmes conditions.","form.accept":"J'ai lu et j'accepte les <a href=\"#conditions\">conditions de location</a>.","m.loc":"Adresse","fab.loc":"Notre adresse","fab.wa":"Discuter sur WhatsApp",
     "toast":"Ouverture de WhatsApp pour envoyer votre réservation…",
     "wa.hello":"Bonjour Direction Car, je souhaite louer une voiture.",
     "msg.head":"Nouvelle réservation — Direction Car","msg.car":"Voiture","msg.color":"Couleur","msg.name":"Nom","msg.phone":"Téléphone",
@@ -912,7 +949,7 @@ const I18N = {
     "car.colour":"اللون","car.reserve":"احجز",
     "res.eyebrow":"الحجز","res.title":'احجز في <span class="gold-text">60 ثانية</span>',
     "res.lead":"املأ الاستمارة — يُرسل طلبك مباشرة إلى فريقنا عبر واتساب ونؤكد التوفر في دقائق.",
-    "res.p1":"إلغاء مجاني حتى 48 ساعة قبل الاستلام","res.p2":"كيلومترات غير محدودة ابتداءً من 3 أيام",
+    "res.p1":"إلغاء مجاني حتى 48 ساعة قبل الاستلام",
     "res.p3":"التوصيل إلى المطار أو محطة القطار أو فندقك","res.p4":"نتحدث العربية والفرنسية والإنجليزية",
     "res.call":"تفضل الحديث؟ اتصل بنا أو راسلنا على واتساب",
     "form.title":"حجزك","form.sub":"جميع الحقول إلزامية.",
@@ -926,7 +963,8 @@ const I18N = {
     "visit.eyebrow":"زورونا","visit.title":'وكالتنا في <span class="gold-text">الدار البيضاء</span>',
     "visit.lead":"مرّ لاستلام سيارتك، أو دعنا نوصلها إليك. نحن دائماً على بُعد رسالة.",
     "visit.hours":"مفتوح 7 أيام · 08:00 – 22:00","visit.directions":"الاتجاهات",
-    "foot.rights":"جميع الحقوق محفوظة.","m.loc":"الموقع","fab.loc":"موقعنا","fab.wa":"تواصل عبر واتساب",
+    "foot.rights":"جميع الحقوق محفوظة.",
+    "nav.cond":"الشروط","cond.eyebrow":"شروط الكراء","cond.title":"قبل أن <span class=\"gold-text\">تنطلق</span>","cond.lead":"شروط بسيطة وواضحة — لكراء آمن ومريح.","cond.c1.b":"السن الأدنى","cond.c1.p":"يجب ألا يقل عمر السائق عن 21 سنة.","cond.c2.b":"رخصة السياقة","cond.c2.p":"رخصة سارية منذ سنتين على الأقل. تُقبل الرخص الأجنبية والدولية.","cond.c3.b":"وثيقة الهوية","cond.c3.p":"البطاقة الوطنية للمقيمين بالمغرب، وجواز سفر ساري المفعول للزبناء الأجانب.","cond.c4.b":"الضمانة","cond.c4.p":"تُطلب ضمانة عند الاستلام وتُسترجع كاملة عند إرجاع السيارة بنفس الحالة.","cond.c5.b":"الوقود","cond.c5.p":"إرجاع السيارة بنفس مستوى الوقود عند الاستلام.","cond.c6.b":"مدة الكراء","cond.c6.p":"الحد الأدنى للكراء يوم واحد (24 ساعة). يجب أن يستوفي أي سائق إضافي نفس الشروط.","form.accept":"قرأت وأوافق على <a href=\"#conditions\">شروط الكراء</a>.","m.loc":"الموقع","fab.loc":"موقعنا","fab.wa":"تواصل عبر واتساب",
     "toast":"جارٍ فتح واتساب لإرسال حجزك…",
     "wa.hello":"مرحباً Direction Car، أود كراء سيارة.",
     "msg.head":"حجز جديد — Direction Car","msg.car":"السيارة","msg.color":"اللون","msg.name":"الاسم","msg.phone":"الهاتف",
@@ -996,11 +1034,10 @@ function renderFleet(){
   grid.innerHTML = CARS.map(c => `
     <article class="car reveal in" data-id="${c.id}" data-type="${c.type}">
       <div class="car-stage">
-        <span class="car-type">${t("type."+c.type)}</span>
-        ${c.badge ? `<span class="car-badge">${t("badge."+c.badge)}</span>` : ""}
         <img loading="lazy" style="opacity:0">
       </div>
       <div class="car-body">
+        <div class="car-tags"><span class="car-type">${t("type."+c.type)}</span>${c.badge ? `<span class="car-badge">${t("badge."+c.badge)}</span>` : ""}</div>
         <div class="car-head">
           <div><div class="car-brand">${c.brand}</div><h3 class="car-name">${c.model}</h3></div>
           <div class="car-price"><b class="gold-text">${c.price}</b><span>${t("unit.dh")} ${t("unit.perday")}</span></div>
@@ -1097,6 +1134,7 @@ fFrom.onchange = () => {
 };
 fTo.onchange = () => { clearErr(fTo); updateSummary(); };
 [fName,fPhone].forEach(el => el.oninput = () => clearErr(el));
+$("#fAccept").onchange = () => $("#acceptWrap").classList.remove("has-err");
 
 $("#resForm").addEventListener("submit", e => {
   e.preventDefault();
@@ -1107,7 +1145,8 @@ $("#resForm").addEventListener("submit", e => {
   if (phoneDigits.length < 9){ setErr(fPhone); ok=false; }
   if (!fFrom.value || new Date(fFrom.value) < new Date(iso(today()))){ setErr(fFrom); ok=false; }
   if (!nights()){ setErr(fTo); ok=false; }
-  if (!ok){ const f = $(".has-err .input"); f && f.focus(); return; }
+  if (!$("#fAccept").checked){ $("#acceptWrap").classList.add("has-err"); ok=false; }
+  if (!ok){ const f = $(".has-err .input") || $(".accept.has-err input"); f && f.focus(); return; }
 
   const car = carById(fCar.value), n = nights();
   const fmt = v => new Date(v).toLocaleDateString(lang==="ar"?"ar-MA":lang==="fr"?"fr-FR":"en-GB",{day:"2-digit",month:"short",year:"numeric"});

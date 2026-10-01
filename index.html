@@ -133,6 +133,19 @@ html[dir="rtl"] .btn .arrow{transform:scaleX(-1)}
    HERO
    ============================================================ */
 .hero{min-height:100svh;display:flex;align-items:center;position:relative;overflow:hidden;padding:120px 0 80px}
+/* ---------- animated ribbon background ---------- */
+#ribbon{position:fixed;inset:0;width:100%;height:100%;display:block;z-index:-2;pointer-events:none}
+#ribbonScrim{position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:0;
+  background:linear-gradient(180deg,rgba(11,11,13,.62),rgba(11,11,13,.5))}
+.has-ribbon .hero-bg{background:radial-gradient(600px 400px at 10% 10%,rgba(122,31,43,.16),transparent 60%)}
+.has-ribbon .trust{background:rgba(17,17,20,.55)}
+.has-ribbon .reserve{background:radial-gradient(500px 360px at 0% 100%,rgba(122,31,43,.14),transparent 60%),rgba(17,17,20,.45)}
+.has-ribbon .nav.scrolled{background:rgba(11,11,13,.7)}
+.has-ribbon .hero-copy{position:relative}
+.has-ribbon .hero-copy::before{content:"";position:absolute;inset:-12% -18% -12% -30%;z-index:-1;pointer-events:none;
+  background:radial-gradient(closest-side,rgba(11,10,16,.82),rgba(11,10,16,.55) 55%,transparent)}
+.has-ribbon .hero h1,.has-ribbon .hero p.lead{text-shadow:0 2px 18px rgba(0,0,0,.55)}
+@media (max-width:920px){ .has-ribbon .hero-copy::before{inset:-6% -10%} }
 .hero-bg{position:absolute;inset:0;z-index:-1;
   background:
     radial-gradient(900px 520px at 78% 58%,rgba(212,175,106,.16),transparent 60%),
@@ -458,6 +471,8 @@ footer{border-top:1px solid var(--line-soft);padding:36px 0 110px}
 </style>
 </head>
 <body>
+<canvas id="ribbon" aria-hidden="true"></canvas>
+<div id="ribbonScrim" aria-hidden="true"></div>
 
 <!-- ============================ NAV ============================ -->
 <header class="nav" id="nav">
@@ -1202,6 +1217,217 @@ fFrom.min = iso(today());
 let saved = null; try { saved = localStorage.getItem("dc-lang"); } catch(e){}
 const nav_l = (navigator.language||"en").slice(0,2);
 applyLang(saved || (["fr","ar"].includes(nav_l) ? nav_l : "en"));
+</script>
+<script>
+/* ============================================================
+   RIBBON GLOW BACKGROUND (WebGL2, adapted from Originkit "Ribbon Glow")
+   Preset: color1 #CFD41E, color2 #C4AC37, speed 26, size 76, angle -50, hover 118, reach 231
+   ============================================================ */
+(function(){
+  const RIBBON = { background:"#0B0A10", color1:"#CFD41E", color2:"#C4AC37", speed:26, size:76, angle:-50, hover:118, reach:231 };
+  const canvas = document.getElementById("ribbon");
+  if (!canvas) return;
+  const gl = canvas.getContext("webgl2", { antialias:false, alpha:false, depth:false, stencil:false, powerPreference:"high-performance" });
+  if (!gl) { canvas.remove(); return; }
+
+  const LAYERS = 84, TWIST = 1.25, DRAG = 0.18;
+  const VERT = `#version 300 es
+const vec2 P[3] = vec2[3](vec2(-1.0,-1.0), vec2(3.0,-1.0), vec2(-1.0,3.0));
+void main(){ gl_Position = vec4(P[gl_VertexID], 0.0, 1.0); }`;
+  const FIELD = `#version 300 es
+precision highp float;
+uniform vec2 uRes; uniform float uTime; uniform vec3 uC1; uniform vec3 uC2;
+uniform float uSize; uniform float uAngle; uniform vec2 uMouse; uniform float uOn; uniform float uReach; uniform vec2 uVel;
+out vec4 o;
+const float LAYERS = ${LAYERS.toFixed(1)};
+const float TWIST = ${TWIST.toFixed(3)};
+const float DRAG = ${DRAG.toFixed(3)};
+const float GAIN = 0.62;
+const vec2 CENTRE = vec2(-0.62, 0.24);
+const float TILT = 0.6; const float ZOOM = 1.05; const float THETA = 2.13;
+const float SHEAR = 0.963; const float SHRINK = 0.953;
+const vec2 WARP_FREQ = vec2(0.42, 2.4); const vec2 WARP_AMP = vec2(0.13, 0.027);
+const vec2 ASPECT = vec2(2.1, 0.17); const float OFFSET = 0.36;
+const float GLOW = 0.0021; const float SOFT = 0.0019; const float FALLOFF = 0.37;
+const float PHASE = 12.0; const float CYCLE = 0.16; const float HUE_TRAVEL = 2.0;
+mat2 rot(float a){ float c = cos(a), s = sin(a); return mat2(c, s, -s, c); }
+void main(){
+  vec2 R = uRes;
+  vec2 pos = (gl_FragCoord.xy - 0.5 * R) / R.y;
+  vec2 d = pos - uMouse;
+  float w = uOn * exp(-dot(d, d) / (uReach * uReach));
+  if (w > 1e-4) pos = uMouse + rot(w * TWIST) * d * (1.0 - 0.3 * min(w, 1.0)) - uVel * min(w, 1.0) * DRAG;
+  pos = rot(uAngle) * pos / uSize;
+  float t = uTime * 0.49 + PHASE;
+  float breath = (-sin(uTime * 0.735) + sin(uTime * 0.49 + 1.0)) * 0.25 + 0.5;
+  vec2 u = rot(TILT) * ((pos - CENTRE) * (ZOOM - breath * 0.085));
+  mat2 fold = mat2(cos(THETA), sin(THETA), -SHEAR, cos(THETA));
+  vec3 col = vec3(0.0);
+  for (float i = 1.0; i <= LAYERS; i += 1.0) {
+    u.x -= sin(u.y * WARP_FREQ.x + t + i * 0.007) * WARP_AMP.x;
+    u.y -= sin(u.x * WARP_FREQ.y - t + i * 0.02) * WARP_AMP.y;
+    u = fold * u * SHRINK;
+    vec2 q = (u - vec2(OFFSET + breath * 0.1, 0.0)) * ASPECT;
+    float g = GLOW / (dot(q, q) + SOFT) * (0.25 + breath * 0.4);
+    float r = length(u);
+    float k = sin(i * CYCLE + t * 1.2 + r * HUE_TRAVEL) * 0.5 + 0.5;
+    col += g * mix(uC1, uC2, k) * (0.62 + 0.5 * k) * exp2(-r * FALLOFF);
+  }
+  vec3 x = max(col * GAIN, 0.0);
+  col = (x * (2.51 * x + 0.03)) / (x * (2.43 * x + 0.59) + 0.14);
+  col = pow(clamp(col, 0.0, 1.0), vec3(0.85, 0.92, 0.98));
+  col *= 1.0 - smoothstep(0.5, 1.6, length(pos)) * 0.07;
+  o = vec4(col, 1.0);
+}`;
+  const FINISH = `#version 300 es
+precision highp float;
+uniform sampler2D uField; uniform vec2 uRes; uniform float uTime; uniform vec3 uBg; uniform float uPaper;
+out vec4 o;
+float ign(vec2 p, float f){ p += 5.588238 * mod(f, 64.0); return fract(52.9829189 * fract(0.06711056 * p.x + 0.00583715 * p.y)); }
+void main(){
+  vec2 frag = gl_FragCoord.xy;
+  vec3 L = max(texture(uField, frag / uRes).rgb, 0.0);
+  vec3 dark = uBg + L * (1.0 - uBg);
+  float strength = clamp(max(L.r, max(L.g, L.b)), 0.0, 1.0);
+  vec3 paper = uBg * (1.0 - strength) + L * 0.96;
+  vec3 col = mix(dark, paper, uPaper);
+  col += (ign(frag, floor(uTime * 24.0)) - 0.5) / 255.0;
+  o = vec4(clamp(col, 0.0, 1.0), 1.0);
+}`;
+
+  const hex = h => { h = h.replace("#",""); return [0,2,4].map(i => parseInt(h.slice(i,i+2),16)/255); };
+  const clamp = (v,lo,hi) => v<lo?lo:v>hi?hi:v;
+
+  function link(frag){
+    const mk = (type, src) => {
+      const sh = gl.createShader(type); gl.shaderSource(sh, src); gl.compileShader(sh);
+      if (!gl.getShaderParameter(sh, gl.COMPILE_STATUS)) { console.error("RibbonGlow shader:", gl.getShaderInfoLog(sh)); return null; }
+      return sh;
+    };
+    const vs = mk(gl.VERTEX_SHADER, VERT), fs = mk(gl.FRAGMENT_SHADER, frag);
+    if (!vs || !fs) return null;
+    const p = gl.createProgram(); gl.attachShader(p, vs); gl.attachShader(p, fs); gl.linkProgram(p);
+    gl.deleteShader(vs); gl.deleteShader(fs);
+    if (!gl.getProgramParameter(p, gl.LINK_STATUS)) { console.error("RibbonGlow link:", gl.getProgramInfoLog(p)); return null; }
+    return p;
+  }
+  const field = link(FIELD), finish = link(FINISH);
+  if (!field || !finish) { canvas.remove(); return; }
+  const loc = (p, names) => Object.fromEntries(names.map(n => [n, gl.getUniformLocation(p, n)]));
+  const uf = loc(field, ["uRes","uTime","uC1","uC2","uSize","uAngle","uMouse","uOn","uReach","uVel"]);
+  const un = loc(finish, ["uField","uRes","uTime","uBg","uPaper"]);
+  gl.bindVertexArray(gl.createVertexArray());
+
+  // offscreen field target (half-float when available)
+  const fbo = gl.createFramebuffer();
+  let tex = null, tw = 0, th = 0, half = !!gl.getExtension("EXT_color_buffer_float");
+  function resizeTarget(w, h){
+    if (w === tw && h === th && tex) return;
+    for (let a = 0; a < 2; a++){
+      if (tex) gl.deleteTexture(tex);
+      tex = gl.createTexture(); gl.bindTexture(gl.TEXTURE_2D, tex);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+      gl.texImage2D(gl.TEXTURE_2D, 0, half ? gl.RGBA16F : gl.RGBA8, w, h, 0, gl.RGBA, half ? gl.HALF_FLOAT : gl.UNSIGNED_BYTE, null);
+      gl.bindFramebuffer(gl.FRAMEBUFFER, fbo);
+      gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, tex, 0);
+      const ok = gl.checkFramebufferStatus(gl.FRAMEBUFFER) === gl.FRAMEBUFFER_COMPLETE;
+      gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+      if (ok || !half) break;
+      half = false;
+    }
+    tw = w; th = h;
+  }
+
+  // pointer (the canvas covers the viewport, so viewport coords are canvas coords)
+  const ptr = { tx:0, ty:0, inside:false };
+  const read = e => { ptr.tx = e.clientX; ptr.ty = e.clientY; ptr.inside = true; };
+  addEventListener("pointermove", read, { passive:true });
+  addEventListener("pointerdown", read, { passive:true });
+  document.addEventListener("pointerout", e => { if (!e.relatedTarget) ptr.inside = false; });
+  addEventListener("touchend", () => { ptr.inside = false; }, { passive:true });
+
+  const mobile = matchMedia("(max-width:760px)").matches || matchMedia("(pointer:coarse)").matches;
+  const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const MAX_DPR = mobile ? 1.25 : 2;
+  const FIELD_SCALE = mobile ? 0.4 : 0.5;   // the field is rendered at reduced resolution, then upscaled
+
+  const v = {
+    speed: clamp(RIBBON.speed,0,100)/50, size: clamp(RIBBON.size,50,200)/100,
+    angle: clamp(RIBBON.angle,-180,180)*Math.PI/180, hover: clamp(RIBBON.hover,0,200)/100, reach: clamp(RIBBON.reach,10,800)
+  };
+  const c1 = hex(RIBBON.color1), c2 = hex(RIBBON.color2), bg = hex(RIBBON.background);
+  const bgLum = 0.2126*bg[0] + 0.7152*bg[1] + 0.0722*bg[2];
+
+  let mx=0, my=0, vx=0, vy=0, on=0, raf=0, last=-1, clock=0, running=false;
+
+  function frame(now){
+    raf = requestAnimationFrame(frame);
+    const dt = last < 0 ? 0 : clamp((now-last)/1000, 0, 0.05);
+    last = now;
+    clock = (clock + dt*v.speed) % 3600;
+    draw(dt);
+  }
+  function draw(dt){
+    const dpr = Math.min(devicePixelRatio || 1, MAX_DPR);
+    const cw = canvas.clientWidth || innerWidth, ch = canvas.clientHeight || innerHeight;
+    const bw = Math.max(1, Math.round(cw*dpr)), bh = Math.max(1, Math.round(ch*dpr));
+    if (canvas.width !== bw || canvas.height !== bh){ canvas.width = bw; canvas.height = bh; }
+    resizeTarget(Math.max(1, Math.round(bw*FIELD_SCALE)), Math.max(1, Math.round(bh*FIELD_SCALE)));
+
+    const present = ptr.inside ? 1 : 0;
+    if (present && on < 0.02){ mx = ptr.tx; my = ptr.ty; }
+    on += (present - on) * (1 - Math.exp(-dt*5));
+    const k = 1 - Math.exp(-dt*16);
+    const nx = mx + (ptr.tx-mx)*k, ny = my + (ptr.ty-my)*k;
+    if (dt > 0){ const kv = 1 - Math.exp(-dt*8); vx += ((nx-mx)/dt - vx)*kv; vy += ((ny-my)/dt - vy)*kv; }
+    mx = nx; my = ny;
+    const vLen = Math.hypot(vx, vy)/ch, vCap = vLen > 3 ? 3/vLen : 1;
+
+    gl.bindFramebuffer(gl.FRAMEBUFFER, fbo);
+    gl.viewport(0, 0, tw, th);
+    gl.useProgram(field);
+    gl.uniform2f(uf.uRes, tw, th);
+    gl.uniform1f(uf.uTime, clock);
+    gl.uniform3f(uf.uC1, c1[0], c1[1], c1[2]);
+    gl.uniform3f(uf.uC2, c2[0], c2[1], c2[2]);
+    gl.uniform1f(uf.uSize, v.size);
+    gl.uniform1f(uf.uAngle, v.angle);
+    gl.uniform2f(uf.uMouse, (mx - cw/2)/ch, (ch/2 - my)/ch);
+    gl.uniform1f(uf.uOn, on*v.hover);
+    gl.uniform1f(uf.uReach, v.reach/ch);
+    gl.uniform2f(uf.uVel, (vx/ch)*vCap, (-vy/ch)*vCap);
+    gl.drawArrays(gl.TRIANGLES, 0, 3);
+
+    gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+    gl.viewport(0, 0, bw, bh);
+    gl.useProgram(finish);
+    gl.activeTexture(gl.TEXTURE0);
+    gl.bindTexture(gl.TEXTURE_2D, tex);
+    gl.uniform1i(un.uField, 0);
+    gl.uniform2f(un.uRes, bw, bh);
+    gl.uniform1f(un.uTime, clock);
+    gl.uniform3f(un.uBg, bg[0], bg[1], bg[2]);
+    gl.uniform1f(un.uPaper, clamp((bgLum-0.35)/0.3, 0, 1));
+    gl.drawArrays(gl.TRIANGLES, 0, 3);
+  }
+  function start(){ if (running || reduced) return; running = true; last = -1; raf = requestAnimationFrame(frame); }
+  function stop(){ running = false; cancelAnimationFrame(raf); }
+
+  document.documentElement.classList.add("has-ribbon");
+  clock = 8;            // start on a nicely developed frame
+  draw(0);              // first frame immediately (also the only frame with reduced motion)
+  if (reduced) addEventListener("resize", () => draw(0));
+  start();
+  document.addEventListener("visibilitychange", () => document.hidden ? stop() : start());
+
+  // soften the ribbons behind content once the visitor scrolls past the hero
+  const scrim = document.getElementById("ribbonScrim");
+  const onScroll = () => { if (scrim) scrim.style.opacity = (0.35 + 0.65*clamp(scrollY / (innerHeight*0.8), 0, 1)).toFixed(3); };
+  addEventListener("scroll", onScroll, { passive:true }); onScroll();
+})();
 </script>
 </body>
 </html>
